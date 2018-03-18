@@ -127,3 +127,47 @@ func TestGetAllProcessInfo(t *testing.T) {
 		}
 	}
 }
+
+func TestInterface(t *testing.T) {
+	var prociInterface Interface
+	prociInterface = Proci{}
+
+	doLog := true
+	pids := prociInterface.GetProcessPids()
+	for i := 0; i < len(pids); i++ {
+		pid := pids[i]
+		if doLog {
+			t.Log("PID", pid)
+		}
+		if pid == 0 {
+			// This is the idle process. No operations can be performed
+			// on it.
+			continue
+		}
+		path, patherr := prociInterface.GetProcessPath(pid)
+		if patherr != nil {
+			t.Fatalf("GetProcessPath for PID %d returned error: %s", pid, patherr)
+		}
+		if doLog {
+			t.Log("  Path:", path)
+		}
+		commandLine, cmderr := prociInterface.GetProcessCommandLine(pid)
+		if cmderr != nil {
+			// Not an error. Expected for some processes.
+			if doLog {
+				t.Log("  Unable to read command line for PID", pid, " error: ", cmderr)
+			}
+		} else {
+			if doLog {
+				t.Log("  Command line:", commandLine)
+			}
+		}
+		memoryUsage, memerr := prociInterface.GetProcessMemoryUsage(pid)
+		if memerr != nil {
+			t.Fatalf("GetProcessMemoryUsage for PID %d returned error: %s", pid, memerr)
+		}
+		if doLog {
+			t.Log("  Memory usage:", memoryUsage, "B (", memoryUsage/1024/1024, "MB )")
+		}
+	}
+}
