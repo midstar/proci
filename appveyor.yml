@@ -22,4 +22,4 @@ install:
 build_script:
     - go build github.com\midstar\proci
     - go test -v -cover github.com\midstar\proci -coverprofile=coverage.out 
-    - goveralls -coverprofile=coverage.out -service=travis-pro -repotoken=monxTTCOjUZzKZHJfkZQJaL01HQzqXkJq
+    - goveralls -coverprofile=coverage.out -service=travis-pro -repotoken=%COVERALLS_TOKEN%
