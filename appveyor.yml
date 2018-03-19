@@ -17,7 +17,9 @@ install:
   - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
   - go version
   - go env
+  - go get github.com\mattn\goveralls
  
 build_script:
     - go build github.com\midstar\proci
-    - go test -v -cover github.com\midstar\proci
+    - go test -v -cover github.com\midstar\proci -coverprofile=coverage.out 
+    - goveralls -coverprofile=coverage.out -service=travis-pro -repotoken=monxTTCOjUZzKZHJfkZQJaL01HQzqXkJq
