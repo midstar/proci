@@ -20,6 +20,14 @@ install:
   - go get github.com\mattn\goveralls
  
 build_script:
-    - go build github.com\midstar\proci
-    - go test -v -cover github.com\midstar\proci -coverprofile=coverage.out 
-    - goveralls -coverprofile=coverage.out
+  - go build github.com\midstar\proci
+  - go test -v -cover github.com\midstar\proci -coverprofile=coverage.out
+  - dir
+  - echo %COVERALLS_TOKEN%
+  
+  - >
+    %GOPATH%/bin/goveralls
+    -coverprofile=coverage.out
+    -service=appveyor-ci
+    -repotoken=%COVERALLS_TOKEN%
+    
