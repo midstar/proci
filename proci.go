@@ -13,7 +13,7 @@ type MemoryStatus struct {
 // functions defined in this module. The purpose is to be able to mock the
 // library during testing.
 type Interface interface {
-	GetMemoryStatus() (MemoryStatus, error)
+	GetMemoryStatus() (*MemoryStatus, error)
 	GetProcessPids() []uint32
 	GetProcessMemoryUsage(pid uint32) (uint64, error)
 	GetProcessPath(pid uint32) (string, error)
@@ -24,12 +24,12 @@ type Interface interface {
 type Proci struct{}
 
 // GetMemoryStatus gets the physical memory utilization.
-func (s Proci) GetMemoryStatus() (MemoryStatus, error) {
+func (s Proci) GetMemoryStatus() (*MemoryStatus, error) {
 	return getMemoryStatus()
 }
 
 // GetMemoryStatus gets the physical memory utilization.
-func GetMemoryStatus() (MemoryStatus, error) {
+func GetMemoryStatus() (*MemoryStatus, error) {
 	return getMemoryStatus()
 }
 

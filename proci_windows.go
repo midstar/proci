@@ -134,16 +134,16 @@ type winMemoryStatusEx struct {
 }
 
 // getMemoryStatus implements GetMemoryStatus.
-func getMemoryStatus() (MemoryStatus, error) {
+func getMemoryStatus() (*MemoryStatus, error) {
 	mStatEx := new(winMemoryStatusEx)
 	mStatEx.DwLength = winDWord(unsafe.Sizeof(*mStatEx))
 
 	ret, _, err := globalMemoryStatusEx.Call(uintptr(unsafe.Pointer(mStatEx)))
 	if ret == 0 {
-		return MemoryStatus{}, fmt.Errorf("unable to get physical memory info. Reason: %s", err)
+		return &MemoryStatus{}, fmt.Errorf("unable to get physical memory info. Reason: %s", err)
 	}
 
-	return MemoryStatus{
+	return &MemoryStatus{
 		MemoryLoad: uint32(mStatEx.DwMemoryLoad),
 		TotalPhys:  uint64(mStatEx.UllTotalPhys),
 		AvailPhys:  uint64(mStatEx.UllAvailPhys)}, nil

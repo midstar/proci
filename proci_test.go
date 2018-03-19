@@ -128,6 +128,21 @@ func TestGetAllProcessInfo(t *testing.T) {
 	}
 }
 
+func TestInvalidPids(t *testing.T) {
+	_, err := GetProcessMemoryUsage(123456)
+	if err == nil {
+		t.Fatal("Expected error when providing invalid PID in GetProcessMemoryUsage")
+	}
+	_, err = GetProcessPath(123456)
+	if err == nil {
+		t.Fatal("Expected error when providing invalid PID in GetProcessPath")
+	}
+	_, err = GetProcessCommandLine(123456)
+	if err == nil {
+		t.Fatal("Expected error when providing invalid PID in GetProcessCommandLine")
+	}
+}
+
 func TestInterface(t *testing.T) {
 	var prociInterface Interface
 	prociInterface = Proci{}
@@ -169,5 +184,22 @@ func TestInterface(t *testing.T) {
 		if doLog {
 			t.Log("  Memory usage:", memoryUsage, "B (", memoryUsage/1024/1024, "MB )")
 		}
+	}
+	
+	mStat, err := prociInterface.GetMemoryStatus()
+	if err != nil {
+		t.Errorf("GetMemoryStatus returned error: %s", err)
+	}
+	t.Log("MemoryLoad:", mStat.MemoryLoad, "%")
+	if mStat.MemoryLoad == 0 {
+		t.Errorf("Memory load cannot be 0")
+	}
+	t.Log("TotalPhys:", mStat.TotalPhys, "B (", mStat.TotalPhys/1024/1024, "MB )")
+	if mStat.TotalPhys == 0 {
+		t.Errorf("Total memory cannot be 0")
+	}
+	t.Log("AvailPhys:", mStat.AvailPhys, "B (", mStat.AvailPhys/1024/1024, "MB )")
+	if mStat.AvailPhys == 0 {
+		t.Errorf("Available memory cannot be 0")
 	}
 }
