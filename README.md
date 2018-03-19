@@ -3,6 +3,7 @@
 [![Documentation](https://godoc.org/github.com/midstar/proci?status.svg)](https://godoc.org/github.com/midstar/proci)
 [![Go Report Card](https://goreportcard.com/badge/github.com/midstar/proci)](https://goreportcard.com/report/github.com/midstar/proci)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/midstar/proci?svg=true)](https://ci.appveyor.com/api/projects/status/github/midstar/proci)
+[![Coverage Status](https://coveralls.io/repos/github/midstar/proci/badge.svg?branch=master)](https://coveralls.io/github/midstar/proci?branch=master)
 
 **proci** is a Go library that provides a set of functions for listing processes and get following information for each process:
 
