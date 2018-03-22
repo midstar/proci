@@ -17,7 +17,7 @@ func TestMock(t *testing.T) {
 	if errMem != nil {
 		t.Fatal("Expected no error for GetProcessMemoryUsage")
 	}
-	if mem != 1008 {
+	if mem != 1024 + 1024 * 8 {
 		t.Fatal("Expected 1008 bytes for PID 8")
 	}
 	pm.Processes[8].DoFailMemoryUsage = true

@@ -35,7 +35,7 @@ func GenerateMock(numberOfProcesses int) *ProciMock {
 			Pid : pid,
 			Path : fmt.Sprintf("path_%d", i),
 			CommandLine : fmt.Sprintf("command_line_%d", i),
-			MemoryUsage : uint64(1000 + i),
+			MemoryUsage : uint64(1024 + i * 1024),
 			DoFailPath : false,
 			DoFailCommandLine : false,
 			DoFailMemoryUsage : false}
